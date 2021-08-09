@@ -1,0 +1,56 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body"> 
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Dark table -->
+  <div class="row mt-5">
+    <div class="col">
+      <div class="card bg-default shadow">
+        <div class="card-header bg-transparent border-0">
+          <h3 class="text-white mb-0">Usuarios <button [routerLink]="[ '/user-profile/add' ]" class="btn  btn-outline-success"><i class="fas fa-plus-square"></i></button></h3>
+          
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-dark table-flush">
+            <thead class="thead-dark">
+              <tr>
+                <th></th>
+                <th scope="col">id</th>
+                <th scope="col">Fullname</th>
+                <th scope="col">Birth</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of users">
+              <tr>
+                <th scope="row">
+                  <div class="media">
+                    <button [routerLink]="[ '/user-profile/edit', user.id ]" class="btn btn-outline-primary"><i class="fas fa-pen-square"></i></button>
+                  </div>
+                  <br>
+                  <div class="media-body">
+                    <button class="btn btn-outline-danger" (click)="deleteUser(user.id)"><i class="ni ni-fat-remove"></i></button>
+                  </div>
+                </th>
+                <th scope="row">
+                  <span class="mb-0 text-sm">{{user.id}}</span>
+                </th>
+                <td>
+                  {{user.fullname}}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    {{user.birth | date: 'yyyy-MM-dd'}}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

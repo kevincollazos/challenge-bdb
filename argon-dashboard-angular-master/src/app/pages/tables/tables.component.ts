@@ -25,7 +25,14 @@ export class TablesComponent implements OnInit {
       res => {
         this.users = res;
       },
-      err => console.error(err)
+      err => {        
+        Swal.fire({
+        title: '',
+        text: err.error.text,
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      })
+      }
     )
   }
   

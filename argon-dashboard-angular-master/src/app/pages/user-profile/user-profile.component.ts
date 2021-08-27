@@ -15,11 +15,9 @@ import Swal from 'sweetalert2'
 export class UserProfileComponent implements OnInit {
 
   user: User ={
-
     id: 0,
     fullname:"",
-    birth: new Date(),
-
+    birth: new Date(1995,11,17),
   }
 
   edit: boolean = false
@@ -46,27 +44,52 @@ export class UserProfileComponent implements OnInit {
   }
 
   savedUser(){
-    delete this.user.id
+    delete this.user.id    
 
-    this.userService.saveUser(this.user).subscribe(
-      res => {
-        Swal.fire({
-          title: 'Success',
-          text: "User created!",
-          icon: 'success',
-          confirmButtonText: 'Ok'
-        })
-        this.router.navigate(["/tables"])
-      },
-
-      err => 
+    let actualDate = new Date().toISOString().slice(0, 10);
+    let initialDate = new Date(1995,11,17);
+    
+    if (this.user.birth.toString() > actualDate ) {
       Swal.fire({
-        title: 'Error!',
-        text: err,
-        icon: 'error',
+        title: 'Warning',
+        text: "Date doesn't exist",
+        icon: 'warning',
         confirmButtonText: 'Ok'
       })
-    );
+    } else if (this.user.fullname === "") {
+      Swal.fire({
+        title: 'Warning',
+        text: "Field fullname can't be void",
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      })
+    }else if (this.user.birth === initialDate){
+      Swal.fire({
+        title: 'Warning',
+        text: "Field birth can't be void",
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      })
+    }else {
+      this.userService.saveUser(this.user).subscribe(
+        res => {  
+          Swal.fire({
+            title: 'Success',
+            text: "User created!",
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+          this.router.navigate(["/tables"])       
+        }, 
+        err => 
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.text,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
+      );
+    }    
   }
 
   updateUser(){

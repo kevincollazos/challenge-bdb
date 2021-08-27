@@ -25,7 +25,7 @@ class UsersController {
         await pool.query('INSERT INTO person set ?', [req.body]);
         res.json({
             message: 'Usuario creado'
-        });
+        });     
     }
 
     public async delete (req: Request, res: Response): Promise<void>{
